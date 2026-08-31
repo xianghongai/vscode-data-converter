@@ -31,10 +31,11 @@ function evaluate(node: AnyNode, context: Context): unknown {
           continue;
         }
 
+        const key = propertyKey(property.key as AnyNode, property.computed === true, context);
         const value = evaluate(property.value as AnyNode, context);
 
-        if (value !== OMIT) {
-          result[propertyKey(property.key as AnyNode)] = value;
+        if (key !== OMIT && value !== OMIT) {
+          result[key] = value;
         }
       }
 
@@ -46,8 +47,9 @@ function evaluate(node: AnyNode, context: Context): unknown {
         .map((element) => (element === null ? null : evaluate(element, context)))
         .filter((element) => element !== OMIT);
 
+    // estree 的正则字面量把活的 RegExp 实例放在 value 里，JSON 编码后会塌成 {}
     case 'Literal':
-      return node.value;
+      return node.regex ? unresolved(node, context) : node.value;
 
     case 'TemplateLiteral':
       return templateValue(node) ?? unresolved(node, context);
@@ -82,20 +84,33 @@ function unresolved(node: AnyNode, { options, source }: Context): unknown {
   }
 }
 
-function propertyKey(key: AnyNode): string {
-  switch (key.type) {
-    case 'Identifier':
-      return key.name as string;
-
-    case 'Literal':
-      return String(key.value);
-
-    case 'TemplateLiteral':
-      return templateValue(key) ?? String(key.value);
-
-    default:
-      throw new Error(`Unsupported property key: ${key.type}`);
+/**
+ * 计算键 `{ [X]: 1 }` 里的标识符是变量引用，不是键名本身；只有方括号里是字面量
+ * 或无插值模板串时键才静态可知，其余按 `unresolvedValue` 策略处理。
+ */
+function propertyKey(key: AnyNode, computed: boolean, context: Context): string | typeof OMIT {
+  if (!computed && key.type === 'Identifier') {
+    return key.name as string;
   }
+
+  if (key.type === 'Literal' && !key.regex) {
+    return String(key.value);
+  }
+
+  if (key.type === 'TemplateLiteral') {
+    const cooked = templateValue(key);
+
+    if (cooked !== undefined) {
+      return cooked;
+    }
+  }
+
+  if (computed) {
+    const resolved = unresolved(key, context);
+    return typeof resolved === 'string' ? resolved : OMIT;
+  }
+
+  throw new Error(`Unsupported property key: ${key.type}`);
 }
 
 /** 带插值的模板串无法静态求值，返回 undefined 交给调用方按策略处理 */
@@ -107,12 +122,17 @@ function templateValue(node: AnyNode): string | undefined {
 function unaryValue(node: AnyNode, context: Context): unknown {
   const argument = evaluate(node.argument as AnyNode, context);
 
+  // 操作数没求出数值时（未解析的标识符是 OMIT / null / 源码文本），整个表达式也不可解析
+  if (typeof argument !== 'number') {
+    return unresolved(node, context);
+  }
+
   switch (node.operator) {
     case '-':
-      return -(argument as number);
+      return -argument;
 
     case '+':
-      return +(argument as number);
+      return argument;
 
     default:
       return unresolved(node, context);
@@ -139,8 +159,16 @@ function unwrapStatement(node: AnyNode | undefined): AnyNode {
     case 'ExportNamedDeclaration':
       return unwrapStatement(node.declaration as AnyNode);
 
-    case 'VariableDeclaration':
-      return (node.declarations as AnyNode[])[0].init as AnyNode;
+    case 'VariableDeclaration': {
+      const [declaration, ...rest] = node.declarations as AnyNode[];
+
+      // `export declare const a: T;` 没有初值；`const a = {}, b = 2;` 取第一个会静默丢掉 b
+      if (rest.length > 0 || !declaration?.init) {
+        throw new Error('Expected a single initialized declaration');
+      }
+
+      return declaration.init as AnyNode;
+    }
 
     case 'ExpressionStatement': {
       const expression = node.expression as AnyNode;
