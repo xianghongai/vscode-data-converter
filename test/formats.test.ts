@@ -55,3 +55,15 @@ test('jsonc: 语法错误如实抛出', () => {
 test('json-min: 输出不含空白', async () => {
   assert.equal(await codecById('json-min').encode!({ a: 1, b: [2] }), '{"a":1,"b":[2]}');
 });
+
+test('INI / .properties / .env 收到行数组时报错，而不是静默丢数据', () => {
+  const rows = [{ name: 'demo', version: '1.0.0' }];
+
+  for (const id of ['ini', 'properties', 'env'] as const) {
+    assert.throws(() => codecById(id).encode!(rows), /Expected an object of key-value pairs/, id);
+  }
+});
+
+test('plist 仍然支持数组（其格式本身可表达）', async () => {
+  assert.match(await codecById('plist').encode!([{ a: '1' }]), /<array>/);
+});
