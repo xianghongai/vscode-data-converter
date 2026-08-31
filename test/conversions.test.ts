@@ -35,6 +35,7 @@ test('每个源格式都有对应样本', () => {
  */
 const SHAPE_CONSTRAINTS = [
   /Expected an array of rows/, // 扁平对象转不成表格
+  /Expected an object of key-value pairs/, // 行数组转不成 INI / .properties / .env
   /stringify can only be called with an object/, // TOML 顶层必须是表，来源是行数组时不成立
 ];
 

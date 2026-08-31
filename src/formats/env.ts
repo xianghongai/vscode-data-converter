@@ -1,5 +1,6 @@
 import { parse } from 'dotenv';
 import type { Codec } from '@/types';
+import { requireKeyValue } from './key-value';
 
 /** 无需引号的裸值字符集 */
 const BARE_VALUE = /^[A-Za-z0-9_./:@-]*$/;
@@ -15,7 +16,7 @@ export const env: Codec = {
   languageId: 'properties',
   decode: (text) => parse(text),
   encode: (value) =>
-    Object.entries(value as Record<string, unknown>)
+    Object.entries(requireKeyValue(value))
       .map(([key, item]) => `${key}=${encodeValue(item)}`)
       .join('\n') + '\n',
 };
