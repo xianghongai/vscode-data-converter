@@ -1,6 +1,6 @@
 {
 	"ext.displayName": "Data Convert",
-	"ext.description": "在 JSON、JSONC、JSON5、YAML、TOML、XML、INI、.properties、.env、plist、CSV、TSV 与 JavaScript 对象之间转换数据；生成 TypeScript、Go、Rust、Python、Java、C# 类型定义以及 JSON Schema、Zod；以及 Base64、URL、Hex、Unicode、HTML 实体、Query String、JWT 与哈希的编解码。",
+	"ext.description": "在 JSON、YAML、TOML、XML、CSV、INI、.env、plist 与 JavaScript 对象之间转换；生成 TypeScript、Go、Rust、Python、Java、C# 类型与 JSON Schema、Zod；Base64、URL、Hex、JWT、哈希编解码。不联网，不收集数据。",
 	"data-converter.command.convert": "Data Convert: 转换数据格式...",
 	"data-converter.command.encodeDecode": "Data Convert: 编码转换...",
 	"data-converter.configuration.unresolvedValue": "从 JavaScript/TypeScript 对象转换时，无法静态求值的表达式如何处理。",

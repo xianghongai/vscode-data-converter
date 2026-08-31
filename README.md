@@ -18,9 +18,11 @@
   </a>
 </p>
 
+![Screenshot](https://github.com/user-attachments/assets/afd5fb53-3ff8-48bf-87fa-bda107a499cb)
+
 [中文文档](./README_CN.md)
 
-Convert data formats and encodings inside the editor. The result opens in a scratch editor beside the source. Command Palette only, no UI.
+No network connection, Convert data formats and encodings inside the editor. The result opens in a scratch editor beside the source. Command Palette only, no UI.
 
 ## Usage
 
@@ -85,6 +87,10 @@ Formats differ in what they can express, and the extension does not compensate f
 - XML output is always wrapped in a single `<root>` element, with a top-level array wrapped once more in `<item>`.
 - TOML requires a table at the top level, so `smol-toml` reports an error when the source is an array.
 - CSV / TSV need an array of rows (`[{...}, {...}]`); a flat object will not convert. Cells hold scalars only, nested values are serialized to JSON strings, and parsed values are always strings — no type inference.
+
+## Privacy
+
+The extension makes no network requests and stores nothing. Conversions run entirely in the extension host.
 
 ## License 📃
 
