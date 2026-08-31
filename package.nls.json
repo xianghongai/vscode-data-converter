@@ -1,0 +1,10 @@
+{
+	"ext.displayName": "Data Convert",
+	"ext.description": "Convert data between JSON, JSONC, JSON5, YAML, TOML, XML, INI, .properties, .env, plist, CSV, TSV and JavaScript objects; generate types for TypeScript, Go, Rust, Python, Java, C#, JSON Schema and Zod; encode and decode Base64, URL, Hex, Unicode, HTML entities, query strings, JWT and hashes.",
+	"data-converter.command.convert": "Data Convert: Convert Format...",
+	"data-converter.command.encodeDecode": "Data Convert: Encode / Decode...",
+	"data-converter.configuration.unresolvedValue": "How to handle expressions that cannot be evaluated statically when converting from a JavaScript/TypeScript object.",
+	"data-converter.configuration.unresolvedValue.omit": "Drop the key",
+	"data-converter.configuration.unresolvedValue.source": "Keep the source text as a string",
+	"data-converter.configuration.unresolvedValue.null": "Output null"
+}

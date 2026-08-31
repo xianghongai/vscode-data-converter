@@ -1,0 +1,148 @@
+{
+	"name": "vscode-data-converter",
+	"publisher": "NicholasHsiang",
+	"displayName": "%ext.displayName%",
+	"description": "%ext.description%",
+	"icon": "art/icon.png",
+	"version": "1.0.0",
+	"license": "MIT",
+	"packageManager": "pnpm@11.24.0",
+	"bugs": {
+		"url": "https://github.com/xianghongai/vscode-data-converter/issues"
+	},
+	"homepage": "https://github.com/xianghongai/vscode-data-converter/",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/xianghongai/vscode-data-converter/blob/master/README.md"
+	},
+	"engines": {
+		"vscode": "^1.100.0",
+		"node": ">=24"
+	},
+	"categories": [
+		"Formatters",
+		"Other"
+	],
+	"keywords": [
+		"convert",
+		"json",
+		"yaml",
+		"toml",
+		"xml",
+		"csv",
+		"tsv",
+		"json5",
+		"jsonc",
+		"ini",
+		"plist",
+		"dotenv",
+		"json schema",
+		"zod",
+		"typescript",
+		"go",
+		"rust",
+		"python",
+		"java",
+		"csharp",
+		"base64",
+		"url encode",
+		"hex",
+		"html entities",
+		"query string",
+		"jwt",
+		"md5",
+		"sha256",
+		"encode",
+		"decode"
+	],
+	"main": "./dist/extension.js",
+	"files": [
+		"dist/extension.js",
+		"art/icon.png",
+		"package.nls*.json",
+		"README.md",
+		"README_CN.md",
+		"CHANGELOG.md",
+		"LICENSE"
+	],
+	"contributes": {
+		"configuration": {
+			"title": "Data Convert",
+			"properties": {
+				"data-converter.jsObject.unresolvedValue": {
+					"type": "string",
+					"default": "omit",
+					"enum": [
+						"omit",
+						"source",
+						"null"
+					],
+					"enumDescriptions": [
+						"%data-converter.configuration.unresolvedValue.omit%",
+						"%data-converter.configuration.unresolvedValue.source%",
+						"%data-converter.configuration.unresolvedValue.null%"
+					],
+					"markdownDescription": "%data-converter.configuration.unresolvedValue%"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "data-converter.convert",
+				"title": "%data-converter.command.convert%"
+			},
+			{
+				"command": "data-converter.encodeDecode",
+				"title": "%data-converter.command.encodeDecode%"
+			}
+		]
+	},
+	"scripts": {
+		"build": "node esbuild.js --production",
+		"clean": "rimraf --glob \"*.vsix\" dist",
+		"compile": "node esbuild.js",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"lint": "oxlint src test",
+		"package": "vsce package --no-dependencies",
+		"prebuild": "pnpm run typecheck",
+		"precompile": "pnpm run typecheck",
+		"publish": "vsce publish --no-dependencies",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit",
+		"vscode:prepublish": "pnpm run clean && pnpm run build",
+		"watch:esbuild": "node esbuild.js --watch",
+		"watch:tsc": "tsc --noEmit --watch"
+	},
+	"dependencies": {
+		"@babel/parser": "^8.0.4",
+		"dot-properties": "^1.1.1",
+		"dotenv": "^17.4.2",
+		"entities": "^8.0.0",
+		"fast-xml-parser": "^5.11.1",
+		"ini": "^7.0.0",
+		"json5": "^2.2.3",
+		"jsonc-parser": "^3.3.1",
+		"papaparse": "^5.7.0",
+		"plist": "^5.0.0",
+		"qs": "^6.16.0",
+		"quicktype-core": "^26.0.0",
+		"smol-toml": "^1.8.0",
+		"yaml": "^2.9.0"
+	},
+	"devDependencies": {
+		"@types/ini": "^4.1.1",
+		"@types/node": "^26.4.0",
+		"@types/papaparse": "^5.5.2",
+		"@types/plist": "^3.0.5",
+		"@types/qs": "^6.15.1",
+		"@types/vscode": "~1.100.0",
+		"@vscode/vsce": "^3.9.2",
+		"esbuild": "^0.28.2",
+		"oxfmt": "^0.65.0",
+		"oxlint": "^1.80.0",
+		"rimraf": "^6.1.3",
+		"typescript": "^7.0.2",
+		"vitest": "^4.1.11"
+	}
+}
