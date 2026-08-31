@@ -1,5 +1,18 @@
 # Change Log
 
+## v1.0.1 (2026-08-31)
+
+### 变更
+
+- 命令 ID `data-converter.convertFormat` 改为 `data-converter.convert`，绑定过快捷键的需要重新绑定；
+- Query String 新增 `a[b]=1` 括号嵌套语法，双向支持。
+
+### 修复
+
+- `Text → Unicode Escape` 现在也转义反斜杠 —— 此前含 `\u4e2d` 字面量的文本往返后会被误解码；
+- JavaScript / TypeScript Object 求值器的多处缺陷：计算属性键、模板键、正则字面量、一元运算符、无初值声明；
+- INI、`.properties`、`.env` 收到行数组时静默丢数据，现在与 CSV / TSV 一致报形状错误。
+
 ## v1.0.0 (2026-08-31)
 
 首个版本。两条指令式入口，共 271 条转换，全部以扁平清单呈现，支持模糊搜索。
