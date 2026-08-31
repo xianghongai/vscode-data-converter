@@ -127,3 +127,42 @@ test('顶层是标量或标识符时报错，而不是产出 undefined', () => {
   assert.throws(() => decode("'text'"), /Expected an object or array literal/);
   assert.throws(() => decode('SOME_CONSTANT'), /Expected an object or array literal/);
 });
+
+// ——— 求值器边界（Code Review 发现） ———
+
+test('一元运算符作用于无法求值的操作数时按策略处理，不崩溃', () => {
+  assert.deepEqual(decode('{ a: -X }'), {});
+  assert.deepEqual(decode('{ a: -X }', SOURCE), { a: '-X' });
+  assert.deepEqual(decode('{ a: -X }', NULLIFY), { a: null });
+  assert.deepEqual(decode('{ t: -Infinity }'), {});
+  assert.deepEqual(decode('{ t: -Infinity }', SOURCE), { t: '-Infinity' });
+});
+
+test('一元运算符对真正的数字仍然求值', () => {
+  assert.deepEqual(decode('{ a: -1, b: +2 }'), { a: -1, b: 2 });
+});
+
+test('计算属性键按策略处理，不把变量名当字面量键', () => {
+  assert.deepEqual(decode('{ [FOO]: 1 }'), {});
+  assert.deepEqual(decode('{ [FOO]: 1 }', SOURCE), { FOO: 1 });
+  assert.deepEqual(decode('{ [FOO]: 1 }', NULLIFY), {});
+});
+
+test('计算键里是字面量时仍静态可知', () => {
+  assert.deepEqual(decode("{ ['a']: 1, [`b`]: 2 }"), { a: 1, b: 2 });
+});
+
+test('带插值的模板键不再产出字面量 undefined 键', () => {
+  assert.deepEqual(decode('{ [`a${b}`]: 1 }'), {});
+  assert.deepEqual(decode('{ [`a${b}`]: 1 }', SOURCE), { '`a${b}`': 1 });
+});
+
+test('正则字面量不再塌成空对象', () => {
+  assert.deepEqual(decode('{ a: /re/g }'), {});
+  assert.deepEqual(decode('{ a: /re/g }', SOURCE), { a: '/re/g' });
+});
+
+test('无初值的声明与多声明符如实报错', () => {
+  assert.throws(() => decode('export declare const a: T;'), /single initialized declaration/);
+  assert.throws(() => decode('const a = { x: 1 }, b = 2;'), /single initialized declaration/);
+});
