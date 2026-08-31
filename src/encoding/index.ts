@@ -1,9 +1,7 @@
 import { createHash } from 'node:crypto';
 import { decodeHTML, decodeXML, encodeHTML, encodeXML, escapeUTF8 } from 'entities';
 import qs from 'qs';
-import type { Conversion } from '@/types';
-
-const JSON_INDENT = 2;
+import { INDENT, type Conversion } from '@/types';
 
 type Transform = (text: string) => string;
 
@@ -32,7 +30,7 @@ const fromUnicodeEscape: Transform = (text) =>
 
 /** 允许直接粘整条 URL，取 `?` 之后的部分；`qs` 负责重复键收数组与 `a[b]=1` 嵌套语法 */
 const queryStringToJson: Transform = (text) =>
-  `${JSON.stringify(qs.parse(text.trim().replace(/^[^?]*\?/, '')), null, JSON_INDENT)}\n`;
+  `${JSON.stringify(qs.parse(text.trim().replace(/^[^?]*\?/, '')), null, INDENT)}\n`;
 
 /** `repeat` 让数组展开成重复键，与解析侧对称 */
 const jsonToQueryString: Transform = (text) => qs.stringify(JSON.parse(text), { arrayFormat: 'repeat' });
@@ -48,7 +46,7 @@ const jwtToJson: Transform = (text) => {
   const [header, payload, signature] = text.trim().split('.');
   const part = (segment: string) => JSON.parse(Buffer.from(segment, 'base64url').toString('utf8')) as unknown;
 
-  return `${JSON.stringify({ header: part(header), payload: part(payload), signature }, null, JSON_INDENT)}\n`;
+  return `${JSON.stringify({ header: part(header), payload: part(payload), signature }, null, INDENT)}\n`;
 };
 
 /** 分组顺序即清单展示顺序 */

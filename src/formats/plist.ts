@@ -1,4 +1,4 @@
-import { build, parse } from 'plist';
+import { build, parse, type PlistValue } from 'plist';
 import type { Codec } from '@/types';
 
 export const plist: Codec = {
@@ -6,5 +6,5 @@ export const plist: Codec = {
   label: 'plist',
   languageId: 'xml',
   decode: (text) => parse(text),
-  encode: (value) => `${build(value as never)}\n`,
+  encode: (value) => `${build(value as PlistValue)}\n`,
 };
