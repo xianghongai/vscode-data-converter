@@ -25,10 +25,7 @@ function toItems(conversions: Conversion[]): ConversionItem[] {
 }
 
 export async function pickConversion(conversions: Conversion[]): Promise<Conversion | undefined> {
-  const picked = await window.showQuickPick(toItems(conversions), {
-    placeHolder: 'Select a conversion',
-    matchOnDescription: true,
-  });
+  const picked = await window.showQuickPick(toItems(conversions), { placeHolder: 'Select a conversion' });
 
   return picked?.conversion;
 }
