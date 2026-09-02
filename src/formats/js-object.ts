@@ -17,7 +17,7 @@ const PARSE_OPTIONS: ParserOptions = {
   sourceType: 'module',
 };
 
-/** 表示"丢弃这个值"——对象属性跳过该键，数组元素从结果中剔除 */
+/** 表示"丢弃这个值"，对象属性跳过该键，数组元素从结果中剔除 */
 const OMIT = Symbol('omit');
 
 function evaluate(node: AnyNode, context: Context): unknown {

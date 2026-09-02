@@ -18,7 +18,7 @@ test('每个条目都有分组与 languageId', () => {
   }
 });
 
-// ——— Base64 ———
+// ── Base64 ──
 
 test('Base64 往返，含多字节与 emoji', () => {
   const encoded = run('Text → Base64', TEXT);
@@ -36,7 +36,7 @@ test('Base64 解码容忍首尾空白', () => {
   assert.equal(run('Base64 → Text', `\n  ${Buffer.from(TEXT).toString('base64')}  \n`), TEXT);
 });
 
-// ——— URL ———
+// ── URL ──
 
 test('URL 编码往返', () => {
   const encoded = run('Text → URL Encoded', 'a b&c=中文');
@@ -44,14 +44,14 @@ test('URL 编码往返', () => {
   assert.equal(run('URL Encoded → Text', encoded), 'a b&c=中文');
 });
 
-// ——— Hex ———
+// ── Hex ──
 
 test('Hex 往返', () => {
   const encoded = run('Text → Hex', TEXT);
   assert.equal(run('Hex → Text', encoded), TEXT);
 });
 
-// ——— Unicode 转义 ———
+// ── Unicode 转义 ──
 
 test('Unicode 转义只处理非 ASCII 与反斜杠', () => {
   assert.equal(run('Text → Unicode Escape', 'ab 中'), 'ab \\u4e2d');
@@ -82,7 +82,7 @@ test('Unicode 解码同时支持 \\u{XXXXX}', () => {
   assert.equal(run('Unicode Escape → Text', '\\u{1F389}'), '🎉');
 });
 
-// ——— Query String ———
+// ── Query String ──
 
 test('Query String → JSON', () => {
   assert.deepEqual(JSON.parse(run('Query String → JSON', 'a=1&b=%E4%B8%AD')), { a: '1', b: '中' });
@@ -105,7 +105,7 @@ test('Query String 往返', () => {
   assert.equal(run('JSON → Query String', run('Query String → JSON', query)), query);
 });
 
-// ——— JWT ———
+// ── JWT ──
 
 const JWT = [
   Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url'),
@@ -124,7 +124,7 @@ test('JWT 格式不对时如实抛出', () => {
   assert.throws(() => run('JWT → JSON', 'not-a-jwt'));
 });
 
-// ——— HTML / XML 实体 ———
+// ── HTML / XML 实体 ──
 
 const MIXED = 'a<b>&"x" © 中文 🎉';
 
@@ -157,7 +157,7 @@ test('XML 解码认得 &apos;', () => {
   assert.equal(run('XML Entities → Text', '&apos;&lt;&amp;&gt;&quot;'), '\'<&>"');
 });
 
-// ——— 摘要 ———
+// ── 摘要 ──
 
 test('摘要与 Node crypto 一致', async () => {
   const { createHash } = await import('node:crypto');

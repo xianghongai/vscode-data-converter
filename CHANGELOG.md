@@ -1,4 +1,6 @@
-# Change Log
+# Changelog
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## v1.0.1 (2026-08-31)
 
@@ -9,7 +11,7 @@
 
 ### 修复
 
-- `Text → Unicode Escape` 现在也转义反斜杠 —— 此前含 `\u4e2d` 字面量的文本往返后会被误解码；
+- `Text → Unicode Escape` 现在也转义反斜杠，此前含 `\u4e2d` 字面量的文本往返后会被误解码；
 - JavaScript / TypeScript Object 求值器的多处缺陷：计算属性键、模板键、正则字面量、一元运算符、无初值声明；
 - INI、`.properties`、`.env` 收到行数组时静默丢数据，现在与 CSV / TSV 一致报形状错误。
 
@@ -19,18 +21,18 @@
 
 ### 数据格式转换
 
-`Data Convert: Convert Format...` —— 249 条，13 种来源 × 20 种目标，排除源与目标相同的恒等条目。
+`Data Convert: Convert Format...`：249 条，13 种来源 × 20 种目标，排除源与目标相同的恒等条目。
 
 - 来源：JSON、JSONC、JSON5、YAML、TOML、XML、INI、`.properties`、`.env`、plist、CSV、TSV、JavaScript / TypeScript Object
 - 目标：JSON、JSON (Minified)、JSON5、YAML、TOML、XML、INI、`.properties`、`.env`、plist、CSV、TSV，以及代码生成 TypeScript、JSON Schema、Zod、Go、Rust、Python、Java、C#
 
 JSONC 与 JavaScript / TypeScript Object 只作来源，注释和表达式无法从数据本身还原；代码生成的 8 个目标只作目标，输出只含类型定义，不含序列化辅助代码。
 
-JavaScript / TypeScript Object 接受对象或数组字面量，两种选法都可以 —— 只选花括号及内容，或选中被 `export const` / `export default` / `module.exports` / `const` 包裹的完整语句。支持单引号、无引号键、尾随逗号、注释，以及 TypeScript 的 `as const`、`satisfies`、类型断言、非空断言。
+JavaScript / TypeScript Object 接受对象或数组字面量，两种选法都可以：只选花括号及内容，或选中被 `export const` / `export default` / `module.exports` / `const` 包裹的完整语句。支持单引号、无引号键、尾随逗号、注释，以及 TypeScript 的 `as const`、`satisfies`、类型断言、非空断言。
 
 ### 数据编码转换
 
-`Data Convert: Encode / Decode...` —— 22 条，纯文本到文本，不经过中间表示。
+`Data Convert: Encode / Decode...`：22 条，纯文本到文本，不经过中间表示。
 
 - Base64：`Text → Base64`、`Base64 → Text`、`Text → Base64URL`、`Base64URL → Text`
 - URL：`Text → URL Encoded`、`URL Encoded → Text`
@@ -47,7 +49,7 @@ JavaScript / TypeScript Object 接受对象或数组字面量，两种选法都�
 
 ### 配置
 
-- `data-converter.jsObject.unresolvedValue` —— JavaScript / TypeScript 对象中无法静态求值的表达式如何处理：`omit`（默认，省略该键）、`source`（保留源码文本作字符串）、`null`。
+- `data-converter.jsObject.unresolvedValue`：JavaScript / TypeScript 对象中无法静态求值的表达式如何处理：`omit`（默认，省略该键）、`source`（保留源码文本作字符串）、`null`。
 
 ### 约定
 

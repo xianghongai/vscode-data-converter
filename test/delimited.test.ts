@@ -59,7 +59,7 @@ test('CSV 与 TSV 互转', () => {
   assert.equal(tsv.encode!(csv.decode!('a,b\n1,2\n', DECODE)), 'a\tb\n1\t2\n');
 });
 
-// ——— 经由完整清单验证表格类目标的真实路径 ———
+// ── 经由完整清单验证表格类目标的真实路径 ──
 
 const { formatConversions } = await import('@/formats');
 const conversions = formatConversions();

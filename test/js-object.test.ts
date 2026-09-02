@@ -28,7 +28,7 @@ test('负数、字符串键、无插值模板串', () => {
   assert.deepEqual(decode("{ 'a-b': -1, c: `text` }"), { 'a-b': -1, c: 'text' });
 });
 
-// ——— 混有常量引用的配置对象，三种策略 ———
+// ── 混有常量引用的配置对象，三种策略 ──
 
 const WITH_REFERENCE = `{
   name: 'demo',
@@ -52,15 +52,15 @@ test('null：输出 null', () => {
   assert.deepEqual(decode(WITH_REFERENCE, NULLIFY), { ...RESOLVED, color: null });
 });
 
-// ——— 无法求值的各类表达式 ———
+// ── 无法求值的各类表达式 ──
 
 const EXPRESSIONS = '{ a: X, b: Y.Z, c: f(), d: new Date(), e: () => 1, f: `x${y}` }';
 
-test('标识符/成员/调用/构造/箭头函数/插值模板 —— omit', () => {
+test('标识符/成员/调用/构造/箭头函数/插值模板：omit', () => {
   assert.deepEqual(decode(EXPRESSIONS), {});
 });
 
-test('标识符/成员/调用/构造/箭头函数/插值模板 —— source', () => {
+test('标识符/成员/调用/构造/箭头函数/插值模板：source', () => {
   assert.deepEqual(decode(EXPRESSIONS, SOURCE), {
     a: 'X',
     b: 'Y.Z',
@@ -82,7 +82,7 @@ test('数组中无法求值的元素：omit 剔除，null 置空', () => {
   assert.deepEqual(decode('[1, X, 3]', SOURCE), [1, 'X', 3]);
 });
 
-// ——— TypeScript 语法 ———
+// ── TypeScript 语法 ──
 
 test('as const', () => {
   assert.deepEqual(decode('{ a: 1 } as const'), { a: 1 });
@@ -96,7 +96,7 @@ test('内层类型断言与非空断言', () => {
   assert.deepEqual(decode("{ a: '#fff' as string, b: 1! }"), { a: '#fff', b: 1 });
 });
 
-// ——— 语句包裹 ———
+// ── 语句包裹 ──
 
 test('export const', () => {
   assert.deepEqual(decode('export const cfg: Config = { a: 1 } as const;'), { a: 1 });
@@ -128,7 +128,7 @@ test('顶层是标量或标识符时报错，而不是产出 undefined', () => {
   assert.throws(() => decode('SOME_CONSTANT'), /Expected an object or array literal/);
 });
 
-// ——— 求值器边界（Code Review 发现） ———
+// ── 求值器边界（Code Review 发现） ──
 
 test('一元运算符作用于无法求值的操作数时按策略处理，不崩溃', () => {
   assert.deepEqual(decode('{ a: -X }'), {});

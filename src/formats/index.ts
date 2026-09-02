@@ -46,7 +46,7 @@ export const targets = (): Codec[] => codecs.filter((codec) => codec.encode);
 /**
  * 由编解码器表的笛卡尔积生成完整的格式转换清单。
  *
- * 排除源与目标相同的恒等条目 —— 那等同于格式化，编辑器本身已经提供。
+ * 排除源与目标相同的恒等条目，那等同于格式化，编辑器本身已经提供。
  */
 export function formatConversions(options: DecodeOptions = DEFAULT_DECODE_OPTIONS): Conversion[] {
   return sources().flatMap((from) =>
