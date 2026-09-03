@@ -2,6 +2,11 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## v1.1.1 (2026-09-03)
+
+- Publish extension to Open VSX Registry alongside the VS Code Marketplace
+- Update CI workflow to build the VSIX package once and reuse it across both marketplaces
+
 ## v1.1.0 (2026-09-03)
 
 - Bundle the extension with esbuild; `node_modules` is no longer shipped in the VSIX
