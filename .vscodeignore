@@ -1,0 +1,20 @@
+# 全部排除，再按需放行
+# Exclude everything, then allow-list what ships.
+#
+# 前提：打包必须带 --no-dependencies（运行时依赖已由 esbuild 打进 dist/extension.js）。
+# 若改回让 vsce 自行收集 node_modules，`**` 会把依赖一并滤掉，产出的包无法运行。
+# Requires --no-dependencies; deps are bundled by esbuild into dist/extension.js.
+**
+
+# ── 扩展本体 / Extension ──────────
+!package.json
+!package.nls.json
+!package.nls.*.json
+!dist/extension.js
+
+# ── Marketplace 展示 / Listing ────
+!README.md
+!README.zh-CN.md
+!CHANGELOG.md
+!LICENSE
+!art/icon.png

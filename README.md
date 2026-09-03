@@ -20,7 +20,7 @@
 
 ![Screenshot](https://github.com/user-attachments/assets/afd5fb53-3ff8-48bf-87fa-bda107a499cb)
 
-[中文文档](./README_CN.md)
+[中文文档](./README.zh-CN.md)
 
 No network connection, Convert data formats and encodings inside the editor. The result opens in a scratch editor beside the source. Command Palette only, no UI.
 

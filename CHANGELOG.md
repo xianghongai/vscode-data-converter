@@ -2,6 +2,12 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## v1.1.0 (2026-09-03)
+
+- Bundle the extension with esbuild; `node_modules` is no longer shipped in the VSIX
+- Unify packaging and publishing scripts to `vsce:package` and `vsce:publish`
+- Migrate toolchain to oxlint, oxfmt, and Vitest
+
 ## v1.0.1 (2026-08-31)
 
 ### 变更
