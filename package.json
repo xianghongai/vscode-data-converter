@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@babel/parser": "^8.0.4",
-    "dot-properties": "^1.1.1",
+    "dot-properties": "^1.1.2",
     "dotenv": "^17.4.2",
     "entities": "^8.0.0",
     "fast-xml-parser": "^5.11.1",
