@@ -67,11 +67,11 @@
     "watch:tsc": "tsc --noEmit --watch"
   },
   "dependencies": {
-    "@babel/parser": "^8.0.4",
-    "dot-properties": "^1.1.1",
-    "dotenv": "^17.4.2",
-    "entities": "^8.0.0",
-    "fast-xml-parser": "^5.11.1",
+    "@babel/parser": "^8.0.6",
+    "dot-properties": "^1.1.2",
+    "dotenv": "^18.0.5",
+    "entities": "^8.1.0",
+    "fast-xml-parser": "^5.11.2",
     "ini": "^7.0.0",
     "json5": "^2.2.3",
     "jsonc-parser": "^3.3.1",
@@ -79,8 +79,8 @@
     "plist": "^5.0.0",
     "qs": "^6.16.0",
     "quicktype-core": "^26.0.0",
-    "smol-toml": "^1.8.0",
-    "yaml": "^2.9.0"
+    "smol-toml": "^1.9.0",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@types/ini": "^4.1.1",
